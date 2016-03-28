@@ -2,24 +2,24 @@
 layout: post
 title: IdentityServer4 on Docker
 comments: true
-tags: [.net, docker, IdentityServer]
+tags: [.net core, docker, IdentityServer]
 ---
 
-With Microsoft supporting .net on Linux and docker supporting running containers on Windows, .net developers are on fire. Now you can develop and test on containers on Linux directly from Windows without having to switch OS.
+With Microsoft supporting .NET on Linux and docker supporting running containers on Windows, its a great time to be working on .NET stack. Now you can develop and test .NET code on containers directly from Windows without having to switch OS.
 
 ### What is IdentityServer?
 
-[IdentiityServer](https://github.com/identityserver) is an open source .net implementation of OpenId Connect protocol. I have been following its development deeply since I came to know about it last year. IdentityServer4 is being developed completely on ASP.NET Core which means if built on .NET Core, it would work cross platform.
+[IdentityServer](https://github.com/identityserver) is an open source .NET implementation of OpenId Connect protocol. I have been following its development deeply since I came to know about it last year. IdentityServer4 is being developed completely on ASP.NET Core which means if built on .NET Core, it would work cross platform.
 
 *Note: While writing this article, IdentityServer4 is in Beta. Some features such as session management is not implemented yet.*
 
 
-Below I would detail on how to host IdentityServer4(IdSrv in short), a sample API which checks for access token and a simple javascript client in docker running on Windows. The code can be found [here](https://github.com/ankitbko/IdentityServer4.DockerSample). This repo is essentially a fork of [IdentityServer4 Samples](https://github.com/IdentityServer/IdentityServer4.Samples) with few changes where I have deleted other clients and changed some configurations URLs (more detail below). Lets get started.
+Below I would detail on how to host IdentityServer4(IdSrv in short), a sample API which checks for access token and a simple javascript client in docker running on Windows. The code can be found in my [github repo](https://github.com/ankitbko/IdentityServer4.DockerSample). This repo is essentially a fork of [IdentityServer4 Samples](https://github.com/IdentityServer/IdentityServer4.Samples) with few changes where I have deleted other clients and changed some configurations URLs (more detail below). Lets get started.
 
 
 #### Get Docker
 
-Install Docker for windows by following [this](https://docs.docker.com/engine/installation/windows/).
+Install Docker Toolbox for Windows by following instructions [here](https://docs.docker.com/engine/installation/windows/).
 
 #### Create a Docker VM
 
@@ -43,15 +43,15 @@ Lets break down the above command.
 
 Run `docker-machine ls` to verify if the VM is created and running. Note the URL of the VM. This URL will be used to access any application in containers hosted on this VM.
 
-IMAGE HERE
+![docker-machine ls]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-machine-ls.png)
 
 Setup the environment by running `docker-machine env --shell=cmd idsrv-demo` and following the instructions at prompt.
 
-IMAGE HERE
+![docker-machine env]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-machine-env.png)
 
 #### Change URLs in the code
 
-We will have to change the URLs in your code to point to the new VM URL. Places to change this are:
+You will have to change the URLs in your code to point to the new VM URL in the following places:
 
 * `IdSrvHost\Configuration\Clients.cs`: Change all the URL here to point to the VM. Leave the port to 7017 as we will host our client on the same port.
 * `SampleApi\Startup.cs`: Change the URL in `app.UseIdentityServerAuthentication`. Leave the port as 22530.
@@ -63,7 +63,7 @@ We will have to change the URLs in your code to point to the new VM URL. Places 
 
 #### Publish the projects
 
-Go to each project folder and run dnu publish to publish in your desired folder.
+Go to each project folder and run `dnu publish` to publish in your desired folder.
 
 {% highlight Powershell %}
 dnu publish -o <Path to output directory>
@@ -71,7 +71,7 @@ dnu publish -o <Path to output directory>
 
 #### Add a Dockerfile
 
-Create a Dockerfile in the root of  output of each of the published project. It should sit together with approot, wwwroot and logs folder.
+Create a platintext file and name it as Dockerfile (without extension) in the root of  output of each of the published project. It should sit together with approot, wwwroot and logs folder.
 Paste the following content in the Dockerfile.
 
 {% highlight shell %}
@@ -105,11 +105,11 @@ docker build -t idsrvhost .
 * `-t idsrvhost`: Sets the tag of the image.
 * `.`: The PATH to build the image from. By default docker searches for Dockerfile in PATH/Dockerfile.
 
-IMAGE HERE
+![docker build]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-build.png)
 
 Do the same for each of the projects but change the tag name. Run `docker images` to view all the generated image.
 
-IMAGE Here
+![docker images]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-image.png)
 
 #### Create the container
 
@@ -129,9 +129,13 @@ docker run -d -p 3860:3860 --name api sampleapi
 
 Run `docker ps` to view all the created containers.
 
-IMAGE HERE
+![docker ps]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-ps.png)
 
 #### Thats it.
 
 Open the browser and go to the URL:PORT to view each of the site. Open URL:7017 to play with the javascript client.
 
+![client]({{ site.url }}/assets/img/posts/Id4-on-docker/client-running.png)
+
+### Conclusion
+Docker is great and very easy once you get hang of it. Next step you can try `-v` command to mount the source code to container without having to publish the site. This is incredibly helpful during development where you want to avoid hassle of publishing and creating new images every time you make a change.
