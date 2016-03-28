@@ -25,3 +25,6 @@ github:
   repo:           https://github.com/ankitbko
 
 gems: [jekyll-paginate, jekyll-gist]
+
+social:
+  twitter:        ankitbko
