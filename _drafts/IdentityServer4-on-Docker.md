@@ -3,6 +3,7 @@ layout: post
 title: IdentityServer4 on Docker
 comments: true
 tags: [.net core, docker, IdentityServer]
+description: A tutorial on how to host IdentityServer 4 on Docker
 ---
 
 With Microsoft supporting .NET on Linux and docker supporting running containers on Windows, its a great time to be working on .NET stack. Now you can develop and test .NET code on containers directly from Windows without having to switch OS. Moreover Docker is [beta testing](https://blog.docker.com/2016/03/docker-for-mac-windows-beta/) its new program which makes running containers on Windows much easier. For this post we will go oldschool and use docker toolbox.

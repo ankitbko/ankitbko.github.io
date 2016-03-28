@@ -13,6 +13,10 @@
       {{ page.title }} &middot; {{ site.title }}
     {% endif %}
   </title>
+  
+  {% if page.description %}
+  <meta name="description" content="{{ page.description}}" />
+  {% endif %}
 
   <!-- CSS -->
   <link rel="stylesheet" href="{{ site.baseurl }}public/css/poole.css">
