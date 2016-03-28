@@ -44,11 +44,11 @@ Lets break down the above command.
 
 Run `docker-machine ls` to verify if the VM is created and running. Note the URL of the VM. This URL will be used to access any application in containers hosted on this VM.
 
-![docker-machine ls]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-machine-ls.png)
+![docker-machine ls]({{ site.url }}/assets/images/posts/Id4-on-docker/docker-machine-ls.png)
 
 Setup the environment by running `docker-machine env --shell=cmd idsrv-demo` and following the instructions at prompt.
 
-![docker-machine env]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-machine-env.png)
+![docker-machine env]({{ site.url }}/assets/images/posts/Id4-on-docker/docker-machine-env.png)
 
 #### Change URLs in the code
 
@@ -106,11 +106,11 @@ docker build -t idsrvhost .
 * `-t idsrvhost`: Sets the tag of the image.
 * `.`: The PATH to build the image from. By default docker searches for Dockerfile in PATH/Dockerfile.
 
-![docker build]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-build.png)
+![docker build]({{ site.url }}/assets/images/posts/Id4-on-docker/docker-build.png)
 
 Do the same for each of the projects but change the tag name. Run `docker images` to view all the generated image.
 
-![docker images]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-image.png)
+![docker images]({{ site.url }}/assets/images/posts/Id4-on-docker/docker-image.png)
 
 #### Create the container
 
@@ -130,13 +130,13 @@ docker run -d -p 3860:3860 --name api sampleapi
 
 Run `docker ps` to view all the created containers.
 
-![docker ps]({{ site.url }}/assets/img/posts/Id4-on-docker/docker-ps.png)
+![docker ps]({{ site.url }}/assets/images/posts/Id4-on-docker/docker-ps.png)
 
 #### Thats it.
 
 Open the browser and go to the URL:PORT to view each of the site. Open URL:7017 to play with the javascript client.
 
-![client]({{ site.url }}/assets/img/posts/Id4-on-docker/client-running.png)
+![client]({{ site.url }}/assets/images/posts/Id4-on-docker/client-running.png)
 
 ### Conclusion
 Docker is great and very easy once you get hang of it. Next step you can try `-v` command to mount the source code to container without having to publish the site. This is incredibly helpful during development where you want to avoid hassle of publishing and creating new images every time you make a change.

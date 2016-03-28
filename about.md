@@ -4,7 +4,7 @@ title: About Me
 ---
 
 <div id="over">
-<img class="Centered" src= " {{ site.url }}/assets/img/me.jpg" height="400px" />
+<img class="Centered" src= " {{ site.url }}/assets/images/me.jpg" height="400px" />
 </div>
 
 I am a Software Engineer currently working in Microsoft Center of Excellence team at Mindtree. I started my professional career in 2013 after completing my graduation as Bachelor in Computer Science. My time during graduation was spent on Machine Learning and Computer Vision. Since begining of my professional career I have been working in .NET and its surrounding ecosystem. 
