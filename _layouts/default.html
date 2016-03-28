@@ -9,8 +9,10 @@
 
     <div class="content container">
       {{ content }}
+	  <div>
+	    {% include comments.html %}
+	  </div>
     </div>
-	{% include comments.html %}
 	{% include google_analytics.html %}
   </body>
 </html>
