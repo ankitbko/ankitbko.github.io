@@ -30,3 +30,10 @@ social:
   twitter:        ankitbko
   
 permalink:        /:year/:month/:title/
+
+exclude: ["_app",
+          "Gemfile",
+          "Gemfile.lock",
+          "gulpfile.js",
+          "node_modules",
+          "package.json"]
