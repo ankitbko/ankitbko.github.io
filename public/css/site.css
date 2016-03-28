@@ -58,3 +58,27 @@
    border-left-color: #6a9fb5;
 }
 /* [END] POST TAGS STYLING*/
+
+*
+{
+    padding: 0;
+    margin: 0;
+}
+#over
+{
+    width:100%;
+    height:100%;
+    text-align: center; /*handles the horizontal centering*/
+}
+/*handles the vertical centering*/
+.Centerer
+{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.Centered
+{
+    display: inline-block;
+    vertical-align: middle;
+}
