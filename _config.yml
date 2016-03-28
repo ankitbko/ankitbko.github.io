@@ -7,8 +7,8 @@ permalink:        pretty
 
 # Setup
 title:            F5
-tagline:          'A simple blog'
-description:      'A simple blog regarding ASP.NET, Azure, Angular and other random stuffs'
+tagline:          'Let Me Debug It For You'
+description:      'A blog regarding ASP.NET, Azure, Angular and other random stuffs'
 url:              https://ankitbko.github.io
 baseurl:          /
 
