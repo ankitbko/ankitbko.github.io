@@ -2,7 +2,11 @@ const gulp = require('gulp');
 const concat = require('gulp-concat');
 const uglifycss = require('gulp-uglifycss')
 
-const cssFiles = '_css/**/*.css';
+const cssFiles = [
+					'_css/poole.css',
+					'_css/hyde.css',
+					'_css/**/*.css',
+				];
 
 gulp.task('css', function() {
   return gulp.src(cssFiles)
