@@ -6,6 +6,12 @@ tags: [.net core, docker, IdentityServer]
 description: A tutorial on how to host IdentityServer 4 on Docker
 ---
 
+<div class="message">
+<strong>Update - 18 August 2016</strong> 
+<br>
+This article was written when ASP.NET Core was in RC1. ASP.NET Core 1.0 was released in June 2016 which had some breaking changes. I have updated my repo and written a new post which explains the changes required to target ASP.NET Core 1.0. You can find it <a href="https://ankitbko.github.io/2016/08/IdentityServer4-on-Docker-netcorertm/">here</a>.
+</div>
+
 With Microsoft supporting .NET on Linux and docker supporting running containers on Windows, its a great time to be working on .NET stack. Now you can develop and test .NET code on containers directly from Windows without having to switch OS. Moreover Docker is [beta testing](https://blog.docker.com/2016/03/docker-for-mac-windows-beta/) its new program which makes running containers on Windows much easier. For this post we will go oldschool and use docker toolbox.
 
 ### What is IdentityServer?
