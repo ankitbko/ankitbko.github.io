@@ -14,21 +14,25 @@
 	  </div>
     </div>
 	
-	<div id="botDiv" onclick="toggleChat(); return false;">
-	<iframe id="mebot_chat" src="https://webchat.botframework.com/embed/mebotankitbko?s=vg6nUc5k8Tc.cwA.BCI.kbqKRQsludXiYr9YBBocCwchbYDlhur6bhseSAoGtMk" style="height:480px;position: fixed;display: block;right: 10px;bottom: 10px; visibility:hidden; padding-top: 30px; z-index: 10000;"></iframe>
-	<div id="abg_botIco" style="display: block; right: 10px; width: 70px; height: 70px; background-image: url(&#39;http://bot-framework.azureedge.net/bot-icons-v1/bot-framework-default-7.png&#39;);border-radius: 25px; position: fixed; bottom: 10px;background-size: contain;"></div>
+	<div id="botDiv" onClick="toggleChat(); return false;">
+	<div id="floatingDiv" style="height: 40px;position: fixed;display: block;right: 10px;bottom: 450px; visibility:hidden; z-index: 10000;width: 300px;"></div>
+	<iframe id="mebot_chat" src="https://webchat.botframework.com/embed/mebotankitbko?s=vg6nUc5k8Tc.cwA.BCI.kbqKRQsludXiYr9YBBocCwchbYDlhur6bhseSAoGtMk" style="height:480px;position: fixed;display: block;right: 10px;bottom: 10px; visibility:hidden; z-index: 1000;"></iframe>
+	<div id="mebot_botIco" style="display: block; right: 10px; width: 70px; height: 70px; background-image: url(&#39;http://bot-framework.azureedge.net/bot-icons-v1/bot-framework-default-7.png&#39;);border-radius: 25px; position: fixed; bottom: 10px;background-size: contain;"></div>
 	</div>
 	<script>
 	function toggleChat(){
-		var botIco = document.getElementById("abg_botIco");
+		var botIco = document.getElementById("mebot_botIco");
 		var botChat = document.getElementById("mebot_chat");
-		console.log(botIco.style);
+		var floatingDiv = document.getElementById("floatingDiv");
+		
 		if(botIco.style.visibility=='visible') {
 			botIco.style.visibility='hidden';
 			botChat.style.visibility='visible';
+			floatingDiv.style.visibility='visible';
 		}
 		else {
 			botChat.style.visibility='hidden';
+			floatingDiv.style.visibility='hidden';
 			botIco.style.visibility='visible';
 		}
 	}
