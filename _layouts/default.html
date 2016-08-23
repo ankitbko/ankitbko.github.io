@@ -13,6 +13,27 @@
 	    {% include comments.html %}
 	  </div>
     </div>
+	
+	<div id="botDiv" onclick="toggleChat(); return false;">
+	<iframe id="mebot_chat" src="https://webchat.botframework.com/embed/mebotankitbko?s=vg6nUc5k8Tc.cwA.BCI.kbqKRQsludXiYr9YBBocCwchbYDlhur6bhseSAoGtMk" style="height:480px;position: fixed;display: block;right: 10px;bottom: 10px; visibility:hidden; padding-top: 30px; z-index: 10000;"></iframe>
+	<div id="abg_botIco" style="display: block; right: 10px; width: 70px; height: 70px; background-image: url(&#39;http://bot-framework.azureedge.net/bot-icons-v1/bot-framework-default-7.png&#39;);border-radius: 25px; position: fixed; bottom: 10px;background-size: contain;"></div>
+	</div>
+	<script>
+	function toggleChat(){
+		var botIco = document.getElementById("abg_botIco");
+		var botChat = document.getElementById("mebot_chat");
+		console.log(botIco.style);
+		if(botIco.style.visibility=='visible') {
+			botIco.style.visibility='hidden';
+			botChat.style.visibility='visible';
+		}
+		else {
+			botChat.style.visibility='hidden';
+			botIco.style.visibility='visible';
+		}
+	}
+	</script>
+
 	{% include google_analytics.html %}
   </body>
 </html>
