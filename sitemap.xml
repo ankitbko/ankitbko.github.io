@@ -36,7 +36,7 @@ sitemap:
 
     {% if page.sitemap.exclude != "yes" and extension == "html" and page.path != "/404.html" %}
     <url>
-      <loc>{{ site.url }}{{ page.permalink | remove: "index.html" }}</loc>
+      <loc>{{ site.url }}{{ page.url | remove: "index.html" }}</loc>
       {% if page.sitemap.lastmod %}
         <lastmod>{{ page.sitemap.lastmod | date: "%Y-%m-%d" }}</lastmod>
       {% elsif page.date %}
