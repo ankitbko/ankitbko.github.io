@@ -122,6 +122,6 @@ private void RegisterBotDependencies()
 ### Wrapping Up
 
 As mentioned before, the other way to achieve the same is by creating a REST Api and implementing `IBotState`. However in essence, the way we do this would remain same.
-Microsoft Bot Builder is highly flexible when it comes to extending it with custom logics. Again the source code is at my [github repo](https://github.com/ankitbko/Microsoft.Bot.Builder.RedisStore). I will also publish it as a nuget package.
+Microsoft Bot Builder is highly flexible when it comes to extending it with custom logics. Again the source code is at my [github repo](https://github.com/ankitbko/Microsoft.Bot.Builder.RedisStore). I have also published it as a [nuget package](https://www.nuget.org/packages/Microsoft.Bot.Builder.RedisStore/).
 
 I hope you liked it. Post a comment if you have any question.
