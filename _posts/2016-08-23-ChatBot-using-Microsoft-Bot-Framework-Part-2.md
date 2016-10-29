@@ -74,7 +74,7 @@ public async Task AboutMe(IDialogContext context, LuisResult result)
 }
 ```
 
-This is also similar to the "None" intent handler. Instead of sending only one response, I send two since the sentences are quite big. The response is quire simple but let us keep it this way. In the top of the `MeBotLuisDialog` class, enter proper LUIS ModelId and Subscription Key.   
+This is also similar to the "None" intent handler. Instead of sending only one response, I send two since the sentences are quite big. The response is quire simple but let us keep it this way. Decorate the `MeBotLuisDialog` class with `[LuisModel("modelid", "subskey")]` with correct LUIS ModelId and Subscription Key. You can get the keys from published URL of your LUIS app.  
 There is just one more place that we need to change before we can test our bot that is in `MessageController`. Replace the entire `If` section of the method with the one below -
 
 ```csharp
