@@ -1,0 +1,29 @@
+{
+    "language": "en_US",
+    "ignoreWordsList": [
+        "FormFlow",
+        "blog",
+        "Skype",
+        "Apps",
+        "plugin",
+        "APIs",
+        "botframework",
+        "HTTPS",
+        "workflow",
+        "oppertunity"
+    ],
+    "documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "ignoreRegExp": [
+        "/\\\\(.*\\\\.(jpg|jpeg|png|md|gif|JPG|JPEG|PNG|MD|GIF)\\\\)/g",
+        "/((http|https|ftp|git)\\\\S*)/g",
+        "/^(```\\\\s*)(\\\\w+)?(\\\\s*[\\\\w\\\\W]+?\\\\n*)(```\\\\s*)\\\\n*$/gm"
+    ],
+    "ignoreFileExtensions": [
+        ".env"
+    ],
+    "checkInterval": 5000
+}
