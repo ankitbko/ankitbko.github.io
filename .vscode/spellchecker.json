@@ -10,7 +10,12 @@
         "botframework",
         "HTTPS",
         "workflow",
-        "oppertunity"
+        "oppertunity",
+        "nuget",
+        "repo",
+        "Autofac",
+        "deserialize",
+        "Webhook"
     ],
     "documentTypes": [
         "markdown",
