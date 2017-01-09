@@ -1,6 +1,7 @@
 {
     "language": "en_US",
     "ignoreWordsList": [
+        "OnIncomingCallReceived",
         "FormFlow",
         "blog",
         "Skype",
@@ -15,7 +16,8 @@
         "repo",
         "Autofac",
         "deserialize",
-        "Webhook"
+        "Webhook",
+        "Scorables"
     ],
     "documentTypes": [
         "markdown",
