@@ -14,6 +14,11 @@ Skype for Business has set of APIs called [Unified Communications Web API](https
 
 Lync SDK is fairly straightforward to use. It is event-based and integrates easily with Bot Framework. The only limitation is that Lync 2013/Skype for Business should be already running. Using this I created a simple bot that would let me work in peace. Source code is over [here](https://github.com/ankitbko/SkypeForBusinessBot)
 
+### Dependency
+The bot has an **optional** dependency on Redis server. Since the bot will not be talking to Microsoft Bot Connector in any way, we would need to store bot's context somewhere ourself. I had earlier used locally running instance of Redis. However now I have commented out `RedisStore` and used `InMemoryStore`. To use Redis store uncomment the *region* in `Program.cs` and comment InMemory *region*.
+
+You would also need Skype For Business running and signed in.
+
 ### Features
 
 So what does the bot do as of now? It accepts the incoming IM and -
