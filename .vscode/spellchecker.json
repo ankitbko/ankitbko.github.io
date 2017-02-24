@@ -17,7 +17,9 @@
         "Autofac",
         "deserialize",
         "Webhook",
-        "Scorables"
+        "Scorables",
+        "plaintext",
+        "skype"
     ],
     "documentTypes": [
         "markdown",
