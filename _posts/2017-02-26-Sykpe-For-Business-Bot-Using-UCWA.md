@@ -59,7 +59,7 @@ Once done run the sample and you would be greeted by a console message to choose
 
 If the program started successfully you would see json responses in the console. Login to Skype for Business as the other user and send the message to the bot. The bot should echo back what you typed. Great!! Our bot is working as expected.
 
-### Inside the hood
+### Under the hood
 
 Once the bot signs in using the credentials provided, it polls the UCWA for incoming messages. As mentioned before, you need to send series of requests to UCWA in specific order for this to work. All this is handled in `UcwaReciveMessage.cs` class. When you send a message to the bot, the message is actually received in `GetIM_Step03_Events` method. Once I get the message I create the `Activity` object with minimum information required.
 
