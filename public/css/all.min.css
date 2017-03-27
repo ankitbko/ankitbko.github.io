@@ -55,9 +55,15 @@ a.sidebar-nav-item:hover,a.sidebar-nav-item:focus{text-decoration:underline}.sid
 .tag:hover{background-color:#6a9fb5;text-decoration:none !important;color:white !important}
 .tag:hover::after{border-left-color:#6a9fb5}*{padding:0;margin:0}#over{width:100%;height:100%;text-align:center}
 .Centerer{display:inline-block;height:100%;vertical-align:middle}.Centered{display:inline-block;vertical-align:middle}
-.highlight .hll{background-color:#ffc}.highlight .c{color:#999}.highlight .err{color:#a00;background-color:#faa}
-.highlight .k{color:#069}.highlight .o{color:#555}.highlight .cm{color:#09f;font-style:italic}
-.highlight .cp{color:#099}.highlight .c1{color:#999}.highlight .cs{color:#999}.highlight .gd{background-color:#fcc;border:1px solid #c00}
+.anchorjs-link{color:inherit !important;text-decoration:none !important}@media(max-width:768px){.anchorjs-link{display:none}
+}*:hover>.anchorjs-link{opacity:.75;-webkit-transition:color .16s linear;transition:color .16s linear}
+*:hover>.anchorjs-link:hover,.anchorjs-link:focus{text-decoration:none !important;opacity:1}
+.PageNavigation{font-size:18px;display:block;width:auto;overflow:hidden}.PageNavigation a{display:block;float:left;margin:1em 0}
+.PageNavigation .next{float:right}.PageNavigation div{display:block;width:50%;float:left}
+.PageNavigation .nextDiv{float:right}.highlight .hll{background-color:#ffc}.highlight .c{color:#999}
+.highlight .err{color:#a00;background-color:#faa}.highlight .k{color:#069}.highlight .o{color:#555}
+.highlight .cm{color:#09f;font-style:italic}.highlight .cp{color:#099}.highlight .c1{color:#999}
+.highlight .cs{color:#999}.highlight .gd{background-color:#fcc;border:1px solid #c00}
 .highlight .ge{font-style:italic}.highlight .gr{color:red}.highlight .gh{color:#030}
 .highlight .gi{background-color:#cfc;border:1px solid #0c0}.highlight .go{color:#aaa}
 .highlight .gp{color:#009}.highlight .gu{color:#030}.highlight .gt{color:#9c6}.highlight .kc{color:#069}
