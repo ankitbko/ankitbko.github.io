@@ -37,3 +37,6 @@ exclude: ["_app",
           "gulpfile.js",
           "node_modules",
           "package.json"]
+
+kramdown:
+  auto_ids: true
