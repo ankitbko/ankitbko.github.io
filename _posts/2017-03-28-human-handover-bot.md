@@ -231,7 +231,7 @@ BotChat.App({
 
 > Tip: You can specify an *id* and a *name* in `user` object. These values will be reflected in `From` field in `Activity` which is received by out bot.
 
-Now here comes the interesting part. The two buttons in the page do not make any ajax calls to any controller. Instead they use `DirectLineJs` to send a message to our bot. These messages are different than messages sent when user types something in the chat window. These messages have different **type**.
+Now here comes the interesting part. The two buttons in the page do not make ajax calls to any controller explicitly. Instead they use `DirectLineJs` to send a message to our bot. These messages are different than messages sent when user types something in the chat window. These messages have different **type**.
 
 
 If you have noticed, our `Activity` class has a `Type` field. A normal chat message `Activity` has `Type = "message"`. You might be aware that there are messages with different *types* such as **conversationUpdate**, **typing**, **ping** etc. Messages of some of these *types* are sent by Bot Framework itself such as **conversationUpdate** is sent when a memeber is added or removed from conversation.  
