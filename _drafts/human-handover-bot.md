@@ -87,6 +87,8 @@ Let us understand what we did while running the code. We will divide the flow in
 
 ### Solution Structure
 
+This is a pretty lengthy explaination so I suggest you keep the solution open and follow as I explain each classes.
+
 ![Solution Structure](/assets/images/posts/human-agent/soln.png)
 
 The most important pieces of code which I want to highlight are
@@ -118,22 +120,84 @@ Apart from the interfaces, there are two scorables in **Scorable** folder. `Scor
 
 ### Availability Pool
 
-#### Connecting Agent
-Check if it is valid agent
+When an agent *connects* we add him to **availability** pool. `InMemoryAgentStore` which derives from `IAgentProvider`, maintains this pool using an in-memory `ConcurrentDictionary`. We are not worried about the implementation detail, however it mimics a "queue" therefore guaranteeing that an agent is only fetched once.
+
+
+In an actual production scenario, you would maintain this list using an out-proc data store such as RabbitMQ and implement `IAgentProvider` to to interface with that.
+
+#### Agent Registration
+
+Agent registration is done through `RegisterAgentAsync(IActivity activity, CancellationToken cancellationToken)` of `AgentService`. This method is called when agent clicks on "Connect" button in the dashboard. `AgentService` is a concrete implementation of `IAgentService`.
+
+
+`RegisterAgentAsync` method first adds a new instance of `Agent` in to the availability pool using `IAgentProvider` `AddAgent(Agent agent)` method. 
+
+
+Once this is successful, it adds a *metadata* to the agent's `UserData` store. We use this *metadata* information to identify whether the incoming message is from an agent or a user.  
+
+In a production use case this is not importnat as your agent would most likely require to log in, and therefore you can identify them by passing a valid token (or in any other way depending upon your requirments). I added the *metadata* to keep things simple for this sample.
 
 #### Disconnecting Agent
 
+When agent clicks on *Disconnect* button on dashboard, we just remove the agent from availability pool by calling `UnregisterAgentAsync(IActivity activity ...)` method in `IAgentService`. The same method also clears the *metadata* information which was stored in agent's store.
 
 ### Agent User Mapping
 
+*Agent User Mapping* is a crucial piece in our overall design.  Methods for *Setting* and *Getting* this mapping is present in `IAgentUserMapping` interface. `BotStateMappingStorage` implements this interface and provides implementation of proper storage of these mapping. The mapping is **not** stored in memory. Instead it is stored in [Bot State Service](https://docs.botframework.com/en-us/core-concepts/userdata/#navtitle).
+
+
+To give a brief background, Microsoft Bot Framework provides three stores to store user state. These are 
+
+- [User Data Store](https://docs.botframework.com/en-us/core-concepts/userdata/#savinguserdata): To store data specific to a user.
+
+- [Conversation Store](https://docs.botframework.com/en-us/core-concepts/userdata/#savingconversationdata): To store data specific to a conversation.
+
+- [Private Conversation Store](https://docs.botframework.com/en-us/core-concepts/userdata/#savingprivateconversationdata): To store data specific to a user in a conversation
+
+We utilize these to store *Agent User Mapping* in following ways - 
+
+- The *Agent* which the user is talking to is stored in *User*'s **Private Conversation Store**.
+
+- The *User* which the agent is talking to is stored in *Agent*'s **Private Conversation Store**.
+
+This clever design (😄) makes the *Agent User Mapping* storage distributed and moves the responsibility of maintaining it to Bot State Service.
+
+
+**But what do we save in the states?**  
+We save the *address* of the agnet and the user respectively. More specifically we save the `ConversationReference` of the user and agent. `ConversationReference` can then be used to route message to the receiver on proper channel.  
+We have two classes named `Agent` and `User` each having a property of type `ConversationReference`. We store `Agent` and `User` class instances into *User* and *Agent* store respectively. 
+
+### Initiating Conversation
+When a user wants to connect to the agent, we call `IntitiateConversationWithAgentAsync` of `IUserToAgent`. The method first checks if there are any available agent and fetches the next agent from availability pool. Once we get an agent, we create *Agent User Mapping* and store it into the states as described in previous section.
 
 ### Message Routing
 
+Message is routed by fetching the *Agent User Mapping*. When a message arrives, we retrieve the state associated with the sender. Since our *Agent User Mapping* is maintained in the state, we get that information too.
+
 #### User to Agent Route
+
+When *user* sends a message `UserToAgentScorable` checks if the message needs to be routed to an *agent* or not. This check is done by calling `AgentTransferRequiredAsync` method in `IUserToAgent`.  
+
+`AgentTransferRequiredAsync` method just checks if the user has the agent mapping in its store. If we find `Agent` class in its store, it means that the user is in the conversation with an agent. The scorable will then route the message to the agent by calling `SendToAgentAsync` method in `IUserToAgent`.
+
+
+`SendToAgentAsync` will use the `ConversationReference` of agent to create a new `Activity` and send it to agent through Bot Connector.
+
+<div class="message">
+Due to the implemetnation of Scorable, we are not modifying the DialogStack of the user. This means that when the conversation with agent is stopped, the user returns to same state (Dialog) he was with the bot before the transfer. 
+</div>
 
 #### Agent to User Route
 
+Agent to user flow is also very similar to the above. When a message arrives, `AgentToUserScorable` first check if the sender is an *agent*. It does so by checking the *metadata* information which we store when registering the agent.  
+In your production you would have your own logic of checking if the `Activity` is from a actual *agent*.
+
+
+Once we get a message from a valid agent, we then check if the agent is already in an existing conversation. This is done in similar way as described in last section. If we get a valid `User` in agent's store, `AgentToUserScorable` will route the message to the user by calling `SendToUserAsync` method in `IAgentToUser`.
+
 ### Stopping Conversation
+
+Stopping a conversation simply means removing the *Agent User Mapping*. If this mapping is removed, no further messages would be routed from either user or agent. The implementation of it is done in `AgentService` class. In this sample only an agent can stop the conversation bbby clicking "Stop Conversation with User" button in dashboard.
 
 ### Agent Dashboard Explained
 
