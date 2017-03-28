@@ -103,7 +103,7 @@ There are five key interfaces in our solution, all lying in **Agent** folder. Th
 
 - `IAgentProvider`: Contains methods for *Adding*, *Removing* and getting *Next Available* agent. When agent connects, we *add* the agent to availability pool by using `AddAgent` method. Similarly `RemoveAgent` method is used to remove the agent. `GetNextAvailableAgent` method should get the *next available* agent from availability pool **and** remove the agent from the pool in an atomic way, so that same agent is not returned twice.
 
-- `IUserToAgent`: As name suggests, is used to send messages from user to agent. It's method `SendToAgentAsync` does exactly that. It contains two other methods - `IntitiateConversationWithAgentAsync` to **initate** a transfer for first time and `AgentTransferRequiredAsync` to check if routing is required.
+- `IUserToAgent`: As the name suggests, is used to send messages from user to agent. It's method `SendToAgentAsync` does exactly that. It contains two other methods - `IntitiateConversationWithAgentAsync` to **initate** a transfer for first time and `AgentTransferRequiredAsync` to check if routing is required.
 
 - `IAgentToUser`: Contains a single method `SendToUserAsync` to send the message from agent to user.
 
@@ -140,6 +140,9 @@ In a production use case this is not importnat as your agent would most likely r
 #### Disconnecting Agent
 
 When agent clicks on *Disconnect* button on dashboard, we just remove the agent from availability pool by calling `UnregisterAgentAsync(IActivity activity ...)` method in `IAgentService`. The same method also clears the *metadata* information which was stored in agent's store.
+
+
+In a production scenario, you would not allow agent to disconnect if he is already in a conversation with a user. However in this sample I have not implemented this.
 
 ### Agent User Mapping
 
@@ -183,9 +186,7 @@ When *user* sends a message `UserToAgentScorable` checks if the message needs to
 
 `SendToAgentAsync` will use the `ConversationReference` of agent to create a new `Activity` and send it to agent through Bot Connector.
 
-<div class="message">
-Due to the implemetnation of Scorable, we are not modifying the DialogStack of the user. This means that when the conversation with agent is stopped, the user returns to same state (Dialog) he was with the bot before the transfer. 
-</div>
+> Due to our implemetnation of `Scorable`, we are not modifying the `DialogStack` of the user. This means that when the conversation with agent is stopped, the user returns to same state (Dialog) he was with the bot before the transfer. 
 
 #### Agent to User Route
 
@@ -199,8 +200,108 @@ Once we get a message from a valid agent, we then check if the agent is already 
 
 Stopping a conversation simply means removing the *Agent User Mapping*. If this mapping is removed, no further messages would be routed from either user or agent. The implementation of it is done in `AgentService` class. In this sample only an agent can stop the conversation bbby clicking "Stop Conversation with User" button in dashboard.
 
-### Agent Dashboard Explained
+### Agent Dashboard
 
-### Conclusion
+As mentioned before, we use [Bot Framework Web Chat](https://github.com/Microsoft/BotFramework-WebChat) as a channel for agent. But instead of just using an `<iframe>`, we directly reference the javascript. I have included `botchat.js` and `botchat.css` in the solution by building the Bot Framework Web Chat project. Directly referencing the web chat allows us to use its advanced features which we will see below.
 
-I have been waiting for CRIS for a long time and it is finally available to use. It works so much better than Bing Speech API and looks really promising. However I don't think that Calling Bot is matured enough yet. It looks a little sketchy and entire flow is not smooth, but it is still in preview so lets wait and watch. Meanwhile try out training [Acoustic Model](https://cris.ai/Home/Help#Creating a custom acoustic model) and let me know in the comments how did it work out.  
+
+To give a short introduction, Web Chat uses **Redux** architecture to manage it's state. It uses [DirectLineJs](https://github.com/microsoft/botframework-directlinejs) to connect with the Direct Line API. `DirectLineJs` uses [RxJs](https://github.com/Reactive-Extensions/RxJS) to create an `Observable` which we could subscribe to receive events.
+
+
+First we create `DirectLine` instance. Notice the direct line *secret* is passed through query string parameter.
+
+```javascript
+var botConnection = new BotChat.DirectLine({
+    secret: params['s'],
+    token: params['t'],
+    domain: params['domain'],
+    webSocket: params['webSocket'] && params['webSocket'] === "true"
+});
+```
+
+Next we use call `BotChat.App` passing the Direct Line instance we created above.
+
+```javascript
+BotChat.App({
+    botConnection: botConnection,
+    user: user,
+    bot: bot
+}, document.getElementById("BotChatGoesHere"));
+```
+
+> Tip: You can specify an *id* and a *name* in `user` object. These value will be reflected in `From` field in `Activity` which is received by out bot.
+
+Now here comes the interesting part. The two buttons in the page do not make any ajax calls to any controller. Instead they use `DirectLineJs` to send a message to our bot. These messages are different than messages sent when user types something in the chat window. These messages have different **type**.
+
+
+If you have noticed, our `Activity` class has a `Type` field. A normal chat message `Activity` has `Type = "message"`. You might be aware that there are messages with different *types* such as **conversationUpdate**, **typing**, **ping** etc. Messages of some of these *types* are sent by Bot Framework itself such as **conversationUpdate** is sent when a memeber is added or removed from conversation.  
+
+
+There is another type called **event** which represents an *external event*. As of now, Bot Framework by default does not send any messaages of type **event**. This is left for us developers to use depending upon our requiremnts. We can create a message of type **event** and sent it to our bot. The bot would recieve it as a normal `Activity` which would have all the relevant fields populated such as `From`, `Recipient`, `Conversation` etc.
+
+
+In this example, on button clicks we send messages of type **event**. For *connect* button we send message of type `event` and `name="connect"`. Similarly for *disconnect* we send message with `name="disconnect"`. 
+
+```javascript
+const connect = () => {
+    var name;
+    if(!connected)
+        name = "connect"
+    else
+        name = "disconnect"
+    botConnection
+        .postActivity({type: "event", value: "", from: user, name: name})
+        .subscribe(connectionSuccess);
+};
+```
+
+To send messages we use `postActivity` method of `botConnection`. We then subscribe to it so we can get back the status whether it was successful or not.  
+
+Stop Conversation button works in exactly same way.
+
+```javascript
+const stopConversation = () => {
+    botConnection
+        .postActivity({type: "event", value: "", from: user, name: "stopConversation"})
+        .subscribe(id => console.log("success"));
+};
+```
+
+In our bot we handle these messages in `HandleSystemMessage` method in `MessageController` class.
+
+```csharp
+else if (message.Type == ActivityTypes.Event)
+{
+    using (var scope = DialogModule.BeginLifetimeScope(Conversation.Container, message))
+    {
+        var cancellationToken = default(CancellationToken);
+        var agentService = scope.Resolve<IAgentService>();
+        switch (message.AsEventActivity().Name)
+        {
+            case "connect":
+                await agentService.RegisterAgentAsync(message, cancellationToken);
+                break;
+            case "disconnect":
+                await agentService.UnregisterAgentAsync(message, cancellationToken);
+                break;
+            case "stopConversation":
+                await StopConversation(agentService, message, cancellationToken);
+                await agentService.RegisterAgentAsync(message, cancellationToken);
+                break;
+            default:
+                break;
+        }
+    }
+}
+```
+
+This is how agent connects and disconnects from out bot. Using direct line to send these "event" messages, allows us get full context of who has raised the event. It also eliminates the need of creating any "supporting" endpoints just so that we can send some events to the bot.
+
+### Almost Done
+
+This completes my tutorial on creating a bot to transfer chats to a human. I have explained all the major concepts involved in achieving this. I have tried to make the code as extensible as possible, nonetheless it could serve as a reference if you want to achieve the same thing.  
+
+I cannot close this article without mentioning one of the major shortcoming of this approach. Web Chat channel or Direct Line does not send any event if the client disconnects. If an agent losses the connectivity or closes the dashboard, we do not receive any event regarding this. This means that there is no way of knowing if the agnet is *online*. It is specially a problem if the agent is in a conversation with the user and suddenly there is a network failure at his end. Ideally in this scenario I would want to *re-route* the user to next available agent. But since we don't receive any *connectivity* information from Direct Line by default, it is left to us to implement a solution.
+
+
+Let me know your thoughts on this in comments below. Ask away any questions that you may have.
