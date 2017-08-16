@@ -9,7 +9,7 @@ title: Archive
   * {{ post.date | date_to_string }} &raquo; [ {{ post.title }} ]({{ post.url }})
 	<ul class="tags">
 		{% for tag in post.tags %}
-		<li><a href="{{ site.baseurl }}tags#{{tag}}" class="tag">{{ tag }}</a></li>
+		<li><a href="{{ "/" | relative_url }}tags#{{tag}}" class="tag">{{ tag }}</a></li>
 		{% endfor %}
 	</ul>
 {% endfor %}
