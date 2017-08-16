@@ -7,9 +7,9 @@ title: About Me
 <img class="Centered" src= " {{ site.url }}/assets/images/me.jpg" height="400px" />
 </div>
 
-I am a Software Engineer currently working in Microsoft Center of Excellence team at Mindtree. I started my professional career in 2013 after completing my graduation as Bachelor in Computer Science. My time during graduation was spent on Machine Learning and Computer Vision. Since beginning of my professional career I have been working in .NET and its surrounding ecosystem. 
+Currently I am working as Software Development Engineer at Microsoft. I completed my graduation as Bachelor in Computer Science in 2013. During my graduation I was obsessed mostly with Machine Learning and Computer Vision. I started my career as developer in Mindtree Ltd and worked there primarily in .NET stack and its surrounding ecosystem. 
 
-I am a technology enthusiast and love to dig in emerging technologies. Most of my working hours are spent on creating architecture, evaluating upcoming products and developing frameworks. In my short career, I have designed architecture and successfully delivered products for multiple companies. Currently I am obsessed with ASP.NET Core and have been following it since it was announced. 
+I am a technology enthusiast and love to dig in emerging technologies. In my short career, I have designed architecture and successfully delivered products for multiple companies. Currently I am obsessed Chat Bots and am very interested in seeing how this technology grows.  
 
 Outside professional life, I spend most my time playing DotA, reading books, keeping myself up to date with new technologies and trying to break *(into)* stuffs.☺
 
