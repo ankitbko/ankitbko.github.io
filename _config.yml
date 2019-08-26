@@ -26,6 +26,10 @@ github:
 
 gems: [jekyll-paginate, jekyll-gist]
 
+plugins:
+    - jekyll-gist
+    - jekyll-paginate
+
 social:
   twitter:        ankitbko
   
