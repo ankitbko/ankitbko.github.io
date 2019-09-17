@@ -266,3 +266,13 @@ module.exports = {
 ```
 
 Thats all that is needed to get started with Electron-Forge and React + Typescript.
+
+**UPDATE** Many people are facing issue while importing other files. This is because of missing *extensions* configuration in webpack. In  both `webpack.renderer.config.js` and `webpack.main.config.js` include below configuration -
+
+```
+resolve: {
+extensions: ['.js', '.ts', '.jsx', '.tsx', '.css']
+},
+```
+Thanks for a lot of people in the comments below on bringing this to my attention.
+
