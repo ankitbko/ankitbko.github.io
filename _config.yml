@@ -11,6 +11,7 @@ tagline:          'Squashing Bugs'
 description:      'A simple blog regarding ASP.NET, Azure, Angular and other random stuffs'
 url:              https://ankitbko.github.io
 baseurl:          /
+discusurl:        https://ankitbko.github.io
 
 author:
   name:           'Ankit Sinha'
@@ -24,7 +25,7 @@ version:          2.1.0
 github:
   repo:           https://github.com/ankitbko
 
-gems: [jekyll-paginate, jekyll-gist]
+plugins: [jekyll-paginate, jekyll-gist]
 
 plugins:
     - jekyll-gist
