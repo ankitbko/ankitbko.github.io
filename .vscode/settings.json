@@ -1,4 +1,40 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "spellchecker.language": "en_US",
+    "spellchecker.ignoreWordsList": [
+        "OnIncomingCallReceived",
+        "FormFlow",
+        "blog",
+        "Skype",
+        "Apps",
+        "plugin",
+        "APIs",
+        "botframework",
+        "HTTPS",
+        "workflow",
+        "oppertunity",
+        "nuget",
+        "repo",
+        "Autofac",
+        "deserialize",
+        "Webhook",
+        "Scorables",
+        "plaintext",
+        "skype"
+    ],
+    "spellchecker.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
+    ],
+    "spellchecker.ignoreRegExp": [
+        "/\\\\(.*\\\\.(jpg|jpeg|png|md|gif|JPG|JPEG|PNG|MD|GIF)\\\\)/g",
+        "/((http|https|ftp|git)\\\\S*)/g",
+        "/^(```\\\\s*)(\\\\w+)?(\\\\s*[\\\\w\\\\W]+?\\\\n*)(```\\\\s*)\\\\n*$/gm"
+    ],
+    "spellchecker.ignoreFileExtensions": [
+        ".env"
+    ],
+    "spellchecker.checkInterval": 5000
 }
