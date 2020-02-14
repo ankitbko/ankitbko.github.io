@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/ankitbko/ankitbko.github.io#readme",
   "devDependencies": {
-    "gulp": "~3.9.1",
-    "gulp-concat": "~2.6.0",
-    "gulp-uglifycss": "~1.0.6"
+    "gulp": "~4.0.2",
+    "gulp-concat": "~2.6.1",
+    "gulp-uglifycss": "~1.1.0"
   }
 }
