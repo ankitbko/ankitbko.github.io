@@ -126,7 +126,7 @@ a.sidebar-nav-item:focus {
   padding-bottom: 4rem;
 }
 
-@media (min-width: 48em) {
+@media screen and (min-width: 48em) {
   .content {
     max-width: 38rem;
     margin-left: 20rem;
@@ -134,10 +134,16 @@ a.sidebar-nav-item:focus {
   }
 }
 
-@media (min-width: 64em) {
+@media screen and (min-width: 64em) {
   .content {
     margin-left: 22rem;
     margin-right: 4rem;
+  }
+}
+
+@media screen and (min-width: 91em) {
+  .content {    
+    max-width: 48rem;
   }
 }
 
