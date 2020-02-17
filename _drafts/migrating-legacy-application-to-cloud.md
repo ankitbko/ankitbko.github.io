@@ -45,7 +45,7 @@ Thats it, try starting the Host project and it should launch the WCF service. Na
 
 We will be targeting .NET Core 3.0 so download it from [here](https://dotnet.microsoft.com/download).
 
-#### .NET Portability Analyzer
+#### .NET Portability Analyzer 
 
 [.NET Portability Analyzer](https://docs.microsoft.com/en-us/dotnet/standard/analyzers/portability-analyzer) is a great tool to find potential issues we will face in migrating our application to .NET Core. The tool provides detailed report on how *ready* is our application to be ported to different runtime. The tool is also available as [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=ConnieYau.NETPortabilityAnalyzer) which we will use to analyze our solution so have it installed.
 
@@ -111,7 +111,7 @@ public CustomerController(
 }
 ```
 
-We will need to migrate the data contracts from existing application which were used return the result from WCF. Since they are just POCO classes just copy pasting them would work. They are present in DTO folder in `GH.Northwind.Business.Interfaces`. We move them to a new folder called Models in our ASP.NET Core Web API project. Remove all the `DataContract` and `DataMemeber` attributes as we no longer need them. 
+We will need to migrate the data contracts from existing application which were used return the result from WCF. Since they are just POCO classes just copy pasting them would work. They are present in DTO folder in `GH.Northwind.Business.Interfaces`. We move them to a new folder called Models in our ASP.NET Core Web API project. Remove all the `DataContract` and `DataMember` attributes as we no longer need them. 
 
 We create a `Get` action method that returns `Task<ActionResult<IEnumerable<CustomerDto>>>` and call our repository from there.
 

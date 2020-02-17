@@ -1,40 +1,39 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "editor.wordWrap": "on",
-    "spellchecker.language": "en_US",
-    "spellchecker.ignoreWordsList": [
-        "OnIncomingCallReceived",
-        "FormFlow",
-        "blog",
-        "Skype",
-        "Apps",
-        "plugin",
+    "cSpell.ignoreRegExpList": [
+        "Email",
+    ],
+    "cSpell.words": [
         "APIs",
-        "botframework",
-        "HTTPS",
-        "workflow",
-        "oppertunity",
-        "nuget",
-        "repo",
+        "Apps",
         "Autofac",
-        "deserialize",
-        "Webhook",
+        "FormFlow",
+        "HTTPS",
+        "Kubernetes",
+        "Northwind",
+        "OnIncomingCallReceived",
+        "Prst",
         "Scorables",
+        "Skype",
+        "Validatable",
+        "Webhook",
+        "Wusheng",
+        "appsettings",
+        "blog",
+        "botframework",
+        "deserialize",
+        "dockerizing",
+        "dotnetcore",
+        "edmx",
+        "localdb",
+        "multipleactiveresultsets",
+        "nuget",
+        "oppertunity",
         "plaintext",
-        "skype"
-    ],
-    "spellchecker.documentTypes": [
-        "markdown",
-        "latex",
-        "plaintext"
-    ],
-    "spellchecker.ignoreRegExp": [
-        "/\\\\(.*\\\\.(jpg|jpeg|png|md|gif|JPG|JPEG|PNG|MD|GIF)\\\\)/g",
-        "/((http|https|ftp|git)\\\\S*)/g",
-        "/^(```\\\\s*)(\\\\w+)?(\\\\s*[\\\\w\\\\W]+?\\\\n*)(```\\\\s*)\\\\n*$/gm"
-    ],
-    "spellchecker.ignoreFileExtensions": [
-        ".env"
-    ],
-    "spellchecker.checkInterval": 5000
+        "plugin",
+        "repo",
+        "skype",
+        "workflow"
+    ]
 }
