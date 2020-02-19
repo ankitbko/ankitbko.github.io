@@ -1,4 +1,39 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "cSpell.ignoreRegExpList": [
+        "Email",
+    ],
+    "cSpell.words": [
+        "APIs",
+        "Apps",
+        "Autofac",
+        "FormFlow",
+        "HTTPS",
+        "Kubernetes",
+        "Northwind",
+        "OnIncomingCallReceived",
+        "Prst",
+        "Scorables",
+        "Skype",
+        "Validatable",
+        "Webhook",
+        "Wusheng",
+        "appsettings",
+        "blog",
+        "botframework",
+        "deserialize",
+        "dockerizing",
+        "dotnetcore",
+        "edmx",
+        "localdb",
+        "multipleactiveresultsets",
+        "nuget",
+        "oppertunity",
+        "plaintext",
+        "plugin",
+        "repo",
+        "skype",
+        "workflow"
+    ]
 }
