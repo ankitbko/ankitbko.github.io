@@ -6,6 +6,8 @@ tags: [asp.net core, wcf, legacy, migration, azure]
 description: Migration approach for legacy WCF service into ASP.NET Core
 ---
 
+> This blog was co-authored by Srikantan Sankaran. You can follow him on [twitter](https://twitter.com/SrikantanS) and on his [blog](https://srikantan67.blogspot.com/).
+
 There are huge number of applications still running on on-premise data centers that were written more than a decade ago. With emergence of cloud and the advantages it brings, there is a demand to migrate these applications to cloud and in process modernize them to utilize features that cloud provides in order to optimize performance and cost. This is more prevalent in line of business (LOB) applications that *every* business requires to function (and large business have 100s of them). These applications were written ages ago using latest technology available at *that* time but are now obsolete.   
 
 Recently I had an opportunity to work on modernizing a legacy LOB application comprising of ASP.NET WebForms, WCF service and Entity Framework. In this post, I'll share my learnings and present an approach to tackle such kind of migrations. For this post I will only focus on migrating the APIs and not the UI as approach there is completely different.
@@ -167,6 +169,28 @@ Run the API project and navigate to `/api/customer` and you should get the respo
 It is time to migrate any test cases for this use case. The approach for test case migration will be similar. Once migrated ensure all the test cases pass and the output from the legacy system and the modernized application match each other.
 
 We have successfully migrated a single use case from our legacy application into ASP.NET Core. This project is ready to be deployed into variety of cloud services or dockerized and become available as a container. It is scalable and cloud ready.
+
+
+### Modernizing Database
+
+Although this post was meant to focus on the application side, I feel that I wouldn't be doing you justice if I don't talk about database migration also. Database migration in itself is a huge topic and a candidate for its own blog so here I will only touch upon few aspects of it.
+
+
+Cloud provides us with wide variety of databases to choose from. Usually legacy application has some RDBMS as the database and today's cloud provider provides most of them as PaaS service. Migration strategy of database depends upon individual project needs. You may choose to move the database to one of the PaaS offering from the cloud or you may choose to re-engineer into NoSQL.  
+
+In my project we moved an on-premise SQL Server to Azure SQL Server and I will briefly mention about two aspect of the migration - database itself and SQL Server Jobs.
+
+#### Migration of database
+
+Migration of the SQL Server database to Azure SQL Database was done with the help of [Database Migration Assistant](https://docs.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-ver15) tool. The tool generates assessment reports that provide recommendations to guide you through the changes required prior to performing a migration. The report will also contain what features used in your current database is no longer supported at the target environment. This will help you to understand the feature parity between source and target and assist you to make informed decision about the migration. It also has ability to perform the migration itself.
+
+#### Migration of SQL Jobs
+
+Here again there are multiple strategies that can be adopted. I used following two services for our use cases - 
+
+- [**Azure Elastic Jobs**](https://docs.microsoft.com/en-us/azure/sql-database/elastic-jobs-overview) is a job scheduling service that execute custom jobs on one or many Azure SQL Databases. Elastic Database Jobs provide the ability to run one or more T-SQL scripts in parallel, across a large number of databases, on a schedule or on-demand. This service is in *preview* as of writing this blog and so there are few limitations. It does not yet integrates with Azure Monitor so monitoring and telemetry are difficult to get to. So if a job fails there is no out of the box feature to *trigger* something else. The job history are stored in a table which needs to be monitored for such kind of failures.
+
+- [**Azure Data Factory**](https://azure.microsoft.com/en-in/services/data-factory/) is the cloud-based ETL and data integration service. ADF can be used to create workflows using Stored Procedures and can also be integrated with Azure Logic Apps which provides a lot of flexibility. You can also send any HTTP request from ADF to trigger services or perform other operations. 
 
 
 ### Conclusion
