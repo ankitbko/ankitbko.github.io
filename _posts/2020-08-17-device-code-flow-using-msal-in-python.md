@@ -2,13 +2,15 @@
 layout: post
 title: Device Code Flow in Azure AD using Python's requests module and MSAL
 comments: true
-tags: [python, azure, oauth, msal, requests, device code]
+tags: [Python, azure, oauth, msal, requests, device code]
 description: Sample on how to integrate requests with MSAL to achieve device code flow
 ---
 
 > Repo: [https://github.com/ankitbko/python-requests-msal](https://github.com/ankitbko/python-requests-msal).
 
-I have written a sample application and reusable class to integrate python requests library with MSAL to get AD token using Device Code Flow. The code also serializes the *tokencache* in local file system which is useful for *CLI-type* application.
+If you have created any Python application that required integration with Azure Active Directory you would have most likely used an excellent library from Azure AD team called [MSAL for Python](https://github.com/AzureAD/microsoft-authentication-library-for-python). However there is no easy way to integrate it with [requests](https://requests.readthedocs.io/en/master/) library which is a very popular HTTP library for Python.
+
+I have written a sample application and reusable class to integrate Python requests library with MSAL to get AD token using [Device Code Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-device-code). Device Code Flow is typically used in a client side applications such as CLI. Therefore I have also implemented a *TokenCache* serialization/deserialization logic to persist the token in file system. This is similar to how [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli) persists the token in `~/.azure` folder.
 
 Feel free to copy and use `auth.py` and `rest_service.py` in your own project. The files depends upon following PyPI -
 - [msal](https://pypi.org/project/msal/)
