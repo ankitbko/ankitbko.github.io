@@ -6,7 +6,7 @@ tags: [python, azure, oauth, msal, requests, device code]
 description: Sample on how to integrate requests with MSAL to achieve device code flow
 ---
 
-> Repo: https://github.com/ankitbko/python-requests-msal.
+> Repo: [https://github.com/ankitbko/python-requests-msal](https://github.com/ankitbko/python-requests-msal).
 
 I have written a sample application and reusable class to integrate python requests library with MSAL to get AD token using Device Code Flow. The code also serializes the *tokencache* in local file system which is useful for *CLI-type* application.
 
